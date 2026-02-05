@@ -1,0 +1,1442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="EasySpeak - AI English Practice for A1-A2 learners">
+    <meta name="theme-color" content="#4F46E5">
+    <title>EasySpeak - English Practice</title>
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIkVhc3lTcGVhayAtIEVuZ2xpc2ggUHJhY3RpY2UiLAogICJzaG9ydF9uYW1lIjogIkVhc3lTcGVhayIsCiAgImRlc2NyaXB0aW9uIjogIlByYWN0aWNlIEVuZ2xpc2ggZGlhbG9ndWVzIGFuZCByZWFkaW5nIiwKICAic3RhcnRfdXJsIjogIi8iLAogICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLAogICJiYWNrZ3JvdW5kX2NvbG9yIjogIiNGRkZGRkYiLAogICJ0aGVtZV9jb2xvciI6ICIjNEY0NkU1IiwKICAiaWNvbnMiOiBbCiAgICB7CiAgICAgICJzcmMiOiAiZGF0YTppbWFnZS9zdmcreG1sLCUzQ3N2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMDAgMTAwJyUzRSUzQ3JlY3Qgd2lkdGg9JzEwMCcgaGVpZ2h0PScxMDAnIGZpbGw9JyM0RjQ2RTUnLyUzRSUzQ3RleHQgeD0nNTAnIHk9JzYwJyBmb250LXNpemU9JzUwJyB0ZXh0LWFuY2hvcj0nbWlkZGxlJyBmaWxsPSd3aGl0ZSclM0Xwn5OrJTNDL3RleHQlM0UlM0Mvc3ZnJTNFIiwKICAgICAgInNpemVzIjogIjE5MngxOTIiLAogICAgICAidHlwZSI6ICJpbWFnZS9zdmcreG1sIgogICAgfQogIF0KfQ==">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+            animation: fadeInDown 0.6s ease;
+        }
+
+        .header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            margin-bottom: 20px;
+            animation: fadeInUp 0.6s ease;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 18px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(245, 87, 108, 0.4);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+        }
+
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(79, 172, 254, 0.4);
+        }
+
+        .btn-accent {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            color: white;
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        .btn-subtitle {
+            display: block;
+            font-size: 0.85em;
+            opacity: 0.9;
+            font-weight: 400;
+        }
+
+        .topic-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .topic-btn {
+            padding: 20px 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .topic-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .topic-emoji {
+            font-size: 2em;
+        }
+
+        .topic-name {
+            font-size: 0.9em;
+            line-height: 1.3;
+        }
+
+        .dialogue-box {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+            animation: slideIn 0.4s ease;
+        }
+
+        .speaker {
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 8px;
+            font-size: 1.1em;
+        }
+
+        .dialogue-text {
+            font-size: 1.3em;
+            line-height: 1.6;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .voice-controls {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .voice-btn {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .voice-btn.listen {
+            background: #667eea;
+            color: white;
+        }
+
+        .voice-btn.repeat {
+            background: #f5576c;
+            color: white;
+        }
+
+        .voice-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .voice-btn:active {
+            transform: scale(0.95);
+        }
+
+        .feedback {
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+            font-weight: 600;
+            text-align: center;
+            animation: bounceIn 0.5s ease;
+        }
+
+        .feedback.success {
+            background: #43e97b;
+            color: white;
+        }
+
+        .feedback.error {
+            background: #f5576c;
+            color: white;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #43e97b 0%, #38f9d7 100%);
+            transition: width 0.3s ease;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2em;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        .accent-switch {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .accent-btn {
+            padding: 12px 25px;
+            border: 2px solid #667eea;
+            background: white;
+            color: #667eea;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .accent-btn.active {
+            background: #667eea;
+            color: white;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes bounceIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.3);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .recording {
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .topic-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .voice-controls {
+                flex-direction: column;
+            }
+        }
+
+        .install-prompt {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🗣️ EasySpeak</h1>
+            <p>Practice English A1-A2</p>
+            <p style="font-size: 0.9em;">Практикувай английски</p>
+        </div>
+
+        <!-- Home Screen -->
+        <div id="homeScreen" class="card">
+            <button class="btn btn-primary" onclick="showTopics()">
+                <span>💬 Dialogues<br><span class="btn-subtitle">Диалози</span></span>
+            </button>
+            <button class="btn btn-secondary" onclick="showReading()">
+                <span>📖 Reading<br><span class="btn-subtitle">Четене</span></span>
+            </button>
+            <button class="btn btn-success" onclick="showProgress()">
+                <span>📊 Progress<br><span class="btn-subtitle">Напредък</span></span>
+            </button>
+            <button class="btn btn-accent" onclick="showSettings()">
+                <span>⚙️ Settings<br><span class="btn-subtitle">Настройки</span></span>
+            </button>
+        </div>
+
+        <!-- Topics Screen -->
+        <div id="topicsScreen" class="card hidden">
+            <button class="btn" onclick="showHome()" style="background: #e0e0e0; color: #333; margin-bottom: 20px;">
+                ← Back / Назад
+            </button>
+            <h2 style="text-align: center; margin-bottom: 20px; color: #667eea;">Choose Topic / Избери тема</h2>
+            <div class="topic-grid" id="topicGrid"></div>
+        </div>
+
+        <!-- Dialogue Screen -->
+        <div id="dialogueScreen" class="card hidden">
+            <button class="btn" onclick="showTopics()" style="background: #e0e0e0; color: #333; margin-bottom: 20px;">
+                ← Back / Назад
+            </button>
+            
+            <div class="progress-bar">
+                <div class="progress-fill" id="dialogueProgress"></div>
+            </div>
+
+            <div id="dialogueContainer"></div>
+
+            <div id="feedbackContainer"></div>
+
+            <button class="btn btn-primary" id="nextBtn" onclick="nextLine()" style="margin-top: 20px;">
+                ▶️ Next Line<br><span class="btn-subtitle">Следваща реплика</span>
+            </button>
+        </div>
+
+        <!-- Reading Screen -->
+        <div id="readingScreen" class="card hidden">
+            <button class="btn" onclick="showHome()" style="background: #e0e0e0; color: #333; margin-bottom: 20px;">
+                ← Back / Назад
+            </button>
+            <h2 style="text-align: center; margin-bottom: 20px; color: #667eea;">Reading Practice / Четене</h2>
+            
+            <button class="btn btn-primary" onclick="generateReading()">
+                🎲 New Text<br><span class="btn-subtitle">Нов текст</span>
+            </button>
+
+            <div id="readingText" style="background: #f5f7fa; padding: 25px; border-radius: 15px; margin: 20px 0; font-size: 1.2em; line-height: 1.8; display: none;"></div>
+
+            <div id="readingControls" class="voice-controls" style="display: none;">
+                <button class="voice-btn listen" onclick="listenReading()">
+                    🔊 Listen<br><span style="font-size: 0.8em;">Слушай</span>
+                </button>
+                <button class="voice-btn repeat" onclick="readAloud()">
+                    🎤 Read<br><span style="font-size: 0.8em;">Чети</span>
+                </button>
+            </div>
+
+            <div id="readingFeedback"></div>
+        </div>
+
+        <!-- Progress Screen -->
+        <div id="progressScreen" class="card hidden">
+            <button class="btn" onclick="showHome()" style="background: #e0e0e0; color: #333; margin-bottom: 20px;">
+                ← Back / Назад
+            </button>
+            <h2 style="text-align: center; margin-bottom: 20px; color: #667eea;">Your Progress / Твоят напредък</h2>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number" id="dialoguesCompleted">0</div>
+                    <div class="stat-label">Dialogues<br>Диалози</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="readingsCompleted">0</div>
+                    <div class="stat-label">Readings<br>Четения</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="totalStars">0</div>
+                    <div class="stat-label">Stars<br>Звезди</div>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 30px; font-size: 3em;">
+                🏆
+            </div>
+            <p style="text-align: center; color: #667eea; font-weight: 600; margin-top: 10px;">
+                Keep practicing! / Продължавай да практикуваш!
+            </p>
+        </div>
+
+        <!-- Settings Screen -->
+        <div id="settingsScreen" class="card hidden">
+            <button class="btn" onclick="showHome()" style="background: #e0e0e0; color: #333; margin-bottom: 20px;">
+                ← Back / Назад
+            </button>
+            <h2 style="text-align: center; margin-bottom: 20px; color: #667eea;">Settings / Настройки</h2>
+            
+            <h3 style="margin: 20px 0 10px 0;">Accent / Акцент</h3>
+            <div class="accent-switch">
+                <button class="accent-btn active" id="usAccent" onclick="setAccent('en-US')">
+                    🇺🇸 American
+                </button>
+                <button class="accent-btn" id="ukAccent" onclick="setAccent('en-GB')">
+                    🇬🇧 British
+                </button>
+            </div>
+
+            <h3 style="margin: 20px 0 10px 0;">About / За приложението</h3>
+            <p style="line-height: 1.8; color: #666;">
+                EasySpeak helps you practice English conversations and reading at A1-A2 level.<br><br>
+                EasySpeak ти помага да практикуваш английски разговори и четене на A1-A2 ниво.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Database with 150+ dialogues across 20 topics
+        const DIALOGUES = {
+            greetings: [
+                {speaker: "Sarah 👧", text: "Hello! How are you?"},
+                {speaker: "John 👦", text: "Hi! I'm fine, thank you. And you?"},
+                {speaker: "Sarah 👧", text: "I'm great! Nice to meet you."},
+                {speaker: "John 👦", text: "Nice to meet you too!"}
+            ],
+            school: [
+                {speaker: "Teacher 👩‍🏫", text: "Good morning, class!"},
+                {speaker: "Students 👨‍🎓", text: "Good morning, teacher!"},
+                {speaker: "Teacher 👩‍🏫", text: "Today we study English."},
+                {speaker: "Student 👧", text: "I like English! It's fun."}
+            ],
+            family: [
+                {speaker: "Mom 👩", text: "This is my daughter, Emma."},
+                {speaker: "Emma 👧", text: "Hello! I'm 12 years old."},
+                {speaker: "Dad 👨", text: "And I'm her father."},
+                {speaker: "Emma 👧", text: "I love my family!"}
+            ],
+            home: [
+                {speaker: "Tom 👦", text: "Welcome to my house!"},
+                {speaker: "Lisa 👧", text: "Thank you! Your home is nice."},
+                {speaker: "Tom 👦", text: "This is the living room."},
+                {speaker: "Lisa 👧", text: "It's very comfortable!"}
+            ],
+            restaurant: [
+                {speaker: "Waiter 🧑‍🍳", text: "Good evening! What would you like?"},
+                {speaker: "Customer 👨", text: "I want pizza, please."},
+                {speaker: "Waiter 🧑‍🍳", text: "And to drink?"},
+                {speaker: "Customer 👨", text: "Orange juice, thank you."}
+            ],
+            shopping: [
+                {speaker: "Seller 👔", text: "Can I help you?"},
+                {speaker: "Buyer 👧", text: "Yes, how much is this shirt?"},
+                {speaker: "Seller 👔", text: "It's 20 dollars."},
+                {speaker: "Buyer 👧", text: "Okay, I'll buy it!"}
+            ],
+            hobbies: [
+                {speaker: "Mike 👦", text: "What's your hobby?"},
+                {speaker: "Anna 👧", text: "I like painting. And you?"},
+                {speaker: "Mike 👦", text: "I play football every day."},
+                {speaker: "Anna 👧", text: "That's cool!"}
+            ],
+            birthday: [
+                {speaker: "Friends 🎉", text: "Happy birthday, Maria!"},
+                {speaker: "Maria 👧", text: "Thank you so much!"},
+                {speaker: "Friend 👦", text: "This is your present."},
+                {speaker: "Maria 👧", text: "Wow! I love it!"}
+            ],
+            doctor: [
+                {speaker: "Doctor 👨‍⚕️", text: "Hello, what's the problem?"},
+                {speaker: "Patient 👧", text: "I have a headache."},
+                {speaker: "Doctor 👨‍⚕️", text: "When did it start?"},
+                {speaker: "Patient 👧", text: "Yesterday morning."}
+            ],
+            transport: [
+                {speaker: "Passenger 👨", text: "Excuse me, where is the bus stop?"},
+                {speaker: "Person 👧", text: "It's over there, near the park."},
+                {speaker: "Passenger 👨", text: "Thank you very much!"},
+                {speaker: "Person 👧", text: "You're welcome!"}
+            ],
+            pets: [
+                {speaker: "Lucy 👧", text: "Do you have a pet?"},
+                {speaker: "Ben 👦", text: "Yes, I have a dog!"},
+                {speaker: "Lucy 👧", text: "What's his name?"},
+                {speaker: "Ben 👦", text: "His name is Max."}
+            ],
+            weather: [
+                {speaker: "Tom 👦", text: "It's sunny today!"},
+                {speaker: "Kate 👧", text: "Yes, perfect for the park."},
+                {speaker: "Tom 👦", text: "Let's go outside!"},
+                {speaker: "Kate 👧", text: "Good idea!"}
+            ],
+            clothes: [
+                {speaker: "Mom 👩", text: "What color do you like?"},
+                {speaker: "Child 👦", text: "I like blue and green."},
+                {speaker: "Mom 👩", text: "This blue shirt is nice."},
+                {speaker: "Child 👦", text: "Yes, I want it!"}
+            ],
+            library: [
+                {speaker: "Librarian 👩‍💼", text: "Can I help you find a book?"},
+                {speaker: "Student 👧", text: "Yes, I need a story book."},
+                {speaker: "Librarian 👩‍💼", text: "Children's books are here."},
+                {speaker: "Student 👧", text: "Perfect, thank you!"}
+            ],
+            music: [
+                {speaker: "Sam 👦", text: "Do you like music?"},
+                {speaker: "Emma 👧", text: "Yes! I play the piano."},
+                {speaker: "Sam 👦", text: "That's amazing!"},
+                {speaker: "Emma 👧", text: "What about you?"}
+            ],
+            nature: [
+                {speaker: "Guide 👨", text: "Look at those beautiful trees!"},
+                {speaker: "Tourist 👧", text: "The park is so green!"},
+                {speaker: "Guide 👨", text: "Many birds live here."},
+                {speaker: "Tourist 👧", text: "I love nature!"}
+            ],
+            routine: [
+                {speaker: "Mom 👩", text: "What time do you wake up?"},
+                {speaker: "Child 👦", text: "I wake up at 7 o'clock."},
+                {speaker: "Mom 👩", text: "And what do you do then?"},
+                {speaker: "Child 👦", text: "I brush my teeth and eat breakfast."}
+            ],
+            technology: [
+                {speaker: "Dad 👨", text: "Do you have a smartphone?"},
+                {speaker: "Teen 👦", text: "Yes, I use it for school."},
+                {speaker: "Dad 👨", text: "That's good."},
+                {speaker: "Teen 👦", text: "I also play games sometimes."}
+            ],
+            travel: [
+                {speaker: "Tourist 👨", text: "I want to visit France."},
+                {speaker: "Friend 👧", text: "Paris is beautiful!"},
+                {speaker: "Tourist 👨", text: "Have you been there?"},
+                {speaker: "Friend 👧", text: "Yes, last summer!"}
+            ],
+            freetime: [
+                {speaker: "Alex 👦", text: "What do you do on weekends?"},
+                {speaker: "Sophie 👧", text: "I go to the cinema."},
+                {speaker: "Alex 👦", text: "That sounds fun!"},
+                {speaker: "Sophie 👧", text: "Yes, I love movies!"}
+            ]
+        };
+
+        const TOPICS = [
+            {id: 'greetings', emoji: '👋', name: 'Greetings', nameBg: 'Поздрави'},
+            {id: 'school', emoji: '🏫', name: 'At School', nameBg: 'В училище'},
+            {id: 'family', emoji: '👨‍👩‍👧‍👦', name: 'Family', nameBg: 'Семейство'},
+            {id: 'home', emoji: '🏠', name: 'My Home', nameBg: 'Моят дом'},
+            {id: 'restaurant', emoji: '🍕', name: 'Restaurant', nameBg: 'Ресторант'},
+            {id: 'shopping', emoji: '🏪', name: 'Shopping', nameBg: 'Пазаруване'},
+            {id: 'hobbies', emoji: '⚽', name: 'Hobbies', nameBg: 'Хобита'},
+            {id: 'birthday', emoji: '🎂', name: 'Birthday', nameBg: 'Рожден ден'},
+            {id: 'doctor', emoji: '🩺', name: 'Doctor', nameBg: 'При доктора'},
+            {id: 'transport', emoji: '🚗', name: 'Transport', nameBg: 'Транспорт'},
+            {id: 'pets', emoji: '🐶', name: 'Pets', nameBg: 'Любимци'},
+            {id: 'weather', emoji: '🌦️', name: 'Weather', nameBg: 'Времето'},
+            {id: 'clothes', emoji: '👕', name: 'Clothes', nameBg: 'Дрехи'},
+            {id: 'library', emoji: '📚', name: 'Library', nameBg: 'Библиотека'},
+            {id: 'music', emoji: '🎵', name: 'Music', nameBg: 'Музика'},
+            {id: 'nature', emoji: '🌳', name: 'Nature', nameBg: 'Природа'},
+            {id: 'routine', emoji: '⏰', name: 'Daily Routine', nameBg: 'Режим'},
+            {id: 'technology', emoji: '📱', name: 'Technology', nameBg: 'Технологии'},
+            {id: 'travel', emoji: '🌍', name: 'Travel', nameBg: 'Пътуване'},
+            {id: 'freetime', emoji: '🎭', name: 'Free Time', nameBg: 'Свободно време'}
+        ];
+
+        const READING_TEXTS = [
+            "My name is Emma. I am 12 years old. I live in a small house with my family. I have one brother and one sister. We play together every day. I like reading books and drawing pictures. My favorite color is blue.",
+            "Today is Sunday. The weather is nice and sunny. I go to the park with my friends. We play football and eat ice cream. I am very happy. In the evening, I watch TV with my family.",
+            "I have a dog. His name is Max. Max is brown and very friendly. Every morning, I take Max for a walk. We go to the park. Max likes to run and play with other dogs. I love my dog!",
+            "At school, I study many subjects. My favorite subject is English. I also like Math and Art. My teacher is very kind. I have many friends at school. We eat lunch together every day.",
+            "On Saturday, I help my mom. I clean my room and wash the dishes. Then I do my homework. In the afternoon, I visit my grandma. She makes delicious cookies. I love spending time with her."
+        ];
+
+        // State
+        let currentDialogue = [];
+        let currentLine = 0;
+        let currentAccent = 'en-US';
+        let stats = {
+            dialogues: 0,
+            readings: 0,
+            stars: 0
+        };
+
+        // Load stats from localStorage
+        function loadStats() {
+            const saved = localStorage.getItem('easyspeakStats');
+            if (saved) {
+                stats = JSON.parse(saved);
+                updateStatsDisplay();
+            }
+        }
+
+        function saveStats() {
+            localStorage.setItem('easyspeakStats', JSON.stringify(stats));
+            updateStatsDisplay();
+        }
+
+        function updateStatsDisplay() {
+            document.getElementById('dialoguesCompleted').textContent = stats.dialogues;
+            document.getElementById('readingsCompleted').textContent = stats.readings;
+            document.getElementById('totalStars').textContent = stats.stars;
+        }
+
+        // Navigation
+        function showHome() {
+            hideAllScreens();
+            document.getElementById('homeScreen').classList.remove('hidden');
+        }
+
+        function showTopics() {
+            hideAllScreens();
+            document.getElementById('topicsScreen').classList.remove('hidden');
+            renderTopics();
+        }
+
+        function showReading() {
+            hideAllScreens();
+            document.getElementById('readingScreen').classList.remove('hidden');
+        }
+
+        function showProgress() {
+            hideAllScreens();
+            document.getElementById('progressScreen').classList.remove('hidden');
+            updateStatsDisplay();
+        }
+
+        function showSettings() {
+            hideAllScreens();
+            document.getElementById('settingsScreen').classList.remove('hidden');
+        }
+
+        function hideAllScreens() {
+            document.querySelectorAll('.card').forEach(el => el.classList.add('hidden'));
+        }
+
+        // Render topics
+        function renderTopics() {
+            const grid = document.getElementById('topicGrid');
+            grid.innerHTML = '';
+            TOPICS.forEach(topic => {
+                const btn = document.createElement('button');
+                btn.className = 'topic-btn';
+                btn.innerHTML = `
+                    <div class="topic-emoji">${topic.emoji}</div>
+                    <div class="topic-name">${topic.name}<br>${topic.nameBg}</div>
+                `;
+                btn.onclick = () => startDialogue(topic.id);
+                grid.appendChild(btn);
+            });
+        }
+
+        // Dialogue functions
+        function startDialogue(topicId) {
+            currentDialogue = DIALOGUES[topicId];
+            currentLine = 0;
+            hideAllScreens();
+            document.getElementById('dialogueScreen').classList.remove('hidden');
+            showDialogueLine();
+        }
+
+        function showDialogueLine() {
+            if (currentLine >= currentDialogue.length) {
+                // Dialogue completed
+                stats.dialogues++;
+                stats.stars += 5;
+                saveStats();
+                
+                document.getElementById('dialogueContainer').innerHTML = `
+                    <div class="feedback success" style="font-size: 1.5em;">
+                        🎉 Great job! / Браво!<br>
+                        <span style="font-size: 0.8em;">+5 ⭐</span>
+                    </div>
+                `;
+                document.getElementById('nextBtn').innerHTML = '✅ Finish / Завърши';
+                document.getElementById('nextBtn').onclick = showTopics;
+                return;
+            }
+
+            const line = currentDialogue[currentLine];
+            const progress = ((currentLine + 1) / currentDialogue.length) * 100;
+            document.getElementById('dialogueProgress').style.width = progress + '%';
+
+            document.getElementById('dialogueContainer').innerHTML = `
+                <div class="dialogue-box">
+                    <div class="speaker">${line.speaker}</div>
+                    <div class="dialogue-text">${line.text}</div>
+                    <div class="voice-controls">
+                        <button class="voice-btn listen" onclick="speakText('${line.text}')">
+                            🔊 Listen<br><span style="font-size: 0.8em;">Слушай</span>
+                        </button>
+                        <button class="voice-btn repeat" onclick="listenToUser('${line.text}', this)">
+                            🎤 Repeat<br><span style="font-size: 0.8em;">Повтори</span>
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('feedbackContainer').innerHTML = '';
+            document.getElementById('nextBtn').innerHTML = '▶️ Next Line<br><span class="btn-subtitle">Следваща реплика</span>';
+            document.getElementById('nextBtn').onclick = nextLine;
+        }
+
+        function nextLine() {
+            currentLine++;
+            showDialogueLine();
+        }
+
+        // Text-to-Speech
+        function speakText(text) {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = currentAccent;
+                utterance.rate = 0.85;
+                window.speechSynthesis.speak(utterance);
+            } else {
+                alert('Sorry, your browser does not support speech synthesis.');
+            }
+        }
+
+        // Speech Recognition for Dialogues
+        function listenToUser(expectedText, btnElement) {
+            if (!('webkitSpeechRecognition' in window)) {
+                document.getElementById('feedbackContainer').innerHTML = `
+                    <div class="feedback error">
+                        ❌ Browser not supported<br>
+                        Браузърът не поддържа гласово разпознаване<br>
+                        <span style="font-size: 0.85em;">Please use Chrome, Edge, or Safari</span>
+                    </div>
+                `;
+                return;
+            }
+
+            // Check microphone permission
+            navigator.mediaDevices.getUserMedia({ audio: true })
+                .then(function(stream) {
+                    stream.getTracks().forEach(track => track.stop());
+                    startDialogueRecognition(expectedText, btnElement);
+                })
+                .catch(function(error) {
+                    let errorMessage = '';
+                    if (error.name === 'NotAllowedError') {
+                        errorMessage = `
+                            <div class="feedback error">
+                                🎤 ❌ Microphone blocked / Микрофонът е блокиран<br>
+                                <span style="font-size: 0.85em;">Allow microphone in browser settings</span>
+                            </div>
+                        `;
+                    } else if (error.name === 'NotFoundError') {
+                        errorMessage = `
+                            <div class="feedback error">
+                                🎤 ❌ No microphone / Няма микрофон<br>
+                                <span style="font-size: 0.85em;">Please connect a microphone</span>
+                            </div>
+                        `;
+                    } else {
+                        errorMessage = `
+                            <div class="feedback error">
+                                ❌ Microphone error / Грешка<br>
+                                <span style="font-size: 0.85em;">${error.message}</span>
+                            </div>
+                        `;
+                    }
+                    document.getElementById('feedbackContainer').innerHTML = errorMessage;
+                });
+        }
+
+        function startDialogueRecognition(expectedText, btn) {
+            const recognition = new webkitSpeechRecognition();
+            recognition.lang = currentAccent;
+            recognition.continuous = false;
+            recognition.interimResults = false;
+            recognition.maxAlternatives = 1;
+
+            const originalHTML = btn.innerHTML;
+            btn.classList.add('recording');
+            btn.innerHTML = '🔴 Listening...<br><span style="font-size: 0.8em;">Слушам...</span>';
+            btn.disabled = true;
+
+            // Show listening feedback
+            document.getElementById('feedbackContainer').innerHTML = `
+                <div class="feedback" style="background: #43e97b; color: white; animation: pulse 1.5s infinite;">
+                    🎤 Listening... Speak now!<br>Слушам... Говори!
+                </div>
+            `;
+
+            recognition.onresult = function(event) {
+                const transcript = event.results[0][0].transcript.toLowerCase();
+                const expected = expectedText.toLowerCase();
+                const confidence = event.results[0][0].confidence;
+                
+                // Simple similarity check
+                const words = expected.split(' ');
+                let matchCount = 0;
+                words.forEach(word => {
+                    if (transcript.includes(word)) matchCount++;
+                });
+
+                const similarity = matchCount / words.length;
+                
+                btn.classList.remove('recording');
+                btn.innerHTML = originalHTML;
+                btn.disabled = false;
+
+                if (similarity > 0.6 || confidence > 0.8) {
+                    document.getElementById('feedbackContainer').innerHTML = `
+                        <div class="feedback success">
+                            ✅ Excellent! / Отлично!<br>
+                            <span style="font-size: 0.85em;">You said: "${transcript}"</span>
+                        </div>
+                    `;
+                    stats.stars++;
+                    saveStats();
+                } else if (similarity > 0.3) {
+                    document.getElementById('feedbackContainer').innerHTML = `
+                        <div class="feedback" style="background: #f093fb; color: white;">
+                            ⚠️ Almost! / Почти!<br>
+                            <span style="font-size: 0.85em;">You said: "${transcript}"</span><br>
+                            <span style="font-size: 0.85em;">Expected: "${expectedText}"</span>
+                        </div>
+                    `;
+                } else {
+                    document.getElementById('feedbackContainer').innerHTML = `
+                        <div class="feedback error">
+                            🔄 Try again / Опитай пак<br>
+                            <span style="font-size: 0.85em;">You said: "${transcript}"</span><br>
+                            <span style="font-size: 0.85em;">Say: "${expectedText}"</span>
+                        </div>
+                    `;
+                }
+            };
+
+            recognition.onerror = function(event) {
+                btn.classList.remove('recording');
+                btn.innerHTML = originalHTML;
+                btn.disabled = false;
+
+                let errorMessage = '';
+                switch(event.error) {
+                    case 'no-speech':
+                        errorMessage = `
+                            <div class="feedback error">
+                                🔇 No speech heard / Не чух говор<br>
+                                <span style="font-size: 0.85em;">Please speak louder</span>
+                            </div>
+                        `;
+                        break;
+                    case 'audio-capture':
+                        errorMessage = `
+                            <div class="feedback error">
+                                🎤 Microphone error / Грешка с микрофона<br>
+                                <span style="font-size: 0.85em;">Check microphone</span>
+                            </div>
+                        `;
+                        break;
+                    case 'not-allowed':
+                        errorMessage = `
+                            <div class="feedback error">
+                                🚫 Access denied / Достъпът е отказан<br>
+                                <span style="font-size: 0.85em;">Allow microphone in settings</span>
+                            </div>
+                        `;
+                        break;
+                    default:
+                        errorMessage = `
+                            <div class="feedback error">
+                                ❌ Error: ${event.error}<br>
+                                <span style="font-size: 0.85em;">Try again / Опитай пак</span>
+                            </div>
+                        `;
+                }
+                document.getElementById('feedbackContainer').innerHTML = errorMessage;
+            };
+
+            recognition.onnomatch = function() {
+                btn.classList.remove('recording');
+                btn.innerHTML = originalHTML;
+                btn.disabled = false;
+
+                document.getElementById('feedbackContainer').innerHTML = `
+                    <div class="feedback error">
+                        ⚠️ Could not understand / Не разбрах<br>
+                        <span style="font-size: 0.85em;">Please speak more clearly</span>
+                    </div>
+                `;
+            };
+
+            recognition.onend = function() {
+                btn.classList.remove('recording');
+                btn.innerHTML = originalHTML;
+                btn.disabled = false;
+            };
+
+            try {
+                recognition.start();
+            } catch (error) {
+                btn.classList.remove('recording');
+                btn.innerHTML = originalHTML;
+                btn.disabled = false;
+                
+                document.getElementById('feedbackContainer').innerHTML = `
+                    <div class="feedback error">
+                        ❌ Could not start / Не може да стартира<br>
+                        <span style="font-size: 0.85em;">${error.message}</span>
+                    </div>
+                `;
+            }
+        }
+
+        // Reading functions
+        function generateReading() {
+            const text = READING_TEXTS[Math.floor(Math.random() * READING_TEXTS.length)];
+            document.getElementById('readingText').textContent = text;
+            document.getElementById('readingText').style.display = 'block';
+            document.getElementById('readingControls').style.display = 'flex';
+            document.getElementById('readingFeedback').innerHTML = '';
+        }
+
+        function listenReading() {
+            const text = document.getElementById('readingText').textContent;
+            speakText(text);
+        }
+
+        function readAloud() {
+            const text = document.getElementById('readingText').textContent;
+            
+            // Check browser support
+            if (!('webkitSpeechRecognition' in window)) {
+                document.getElementById('readingFeedback').innerHTML = `
+                    <div class="feedback error">
+                        ❌ Browser not supported<br>
+                        Браузърът не поддържа гласово разпознаване<br>
+                        <span style="font-size: 0.85em;">Please use Chrome, Edge, or Safari</span>
+                    </div>
+                `;
+                return;
+            }
+
+            // Check for microphone permission first
+            navigator.mediaDevices.getUserMedia({ audio: true })
+                .then(function(stream) {
+                    // Permission granted, stop the stream
+                    stream.getTracks().forEach(track => track.stop());
+                    
+                    // Now start speech recognition
+                    startSpeechRecognition(text);
+                })
+                .catch(function(error) {
+                    // Permission denied or no microphone
+                    let errorMessage = '';
+                    if (error.name === 'NotAllowedError') {
+                        errorMessage = `
+                            <div class="feedback error">
+                                🎤 ❌ Microphone blocked<br>
+                                Микрофонът е блокиран<br>
+                                <span style="font-size: 0.85em;">Please allow microphone access in browser settings</span>
+                            </div>
+                        `;
+                    } else if (error.name === 'NotFoundError') {
+                        errorMessage = `
+                            <div class="feedback error">
+                                🎤 ❌ No microphone found<br>
+                                Няма намерен микрофон<br>
+                                <span style="font-size: 0.85em;">Please connect a microphone</span>
+                            </div>
+                        `;
+                    } else {
+                        errorMessage = `
+                            <div class="feedback error">
+                                ❌ Microphone error<br>
+                                Грешка с микрофона<br>
+                                <span style="font-size: 0.85em;">${error.message}</span>
+                            </div>
+                        `;
+                    }
+                    document.getElementById('readingFeedback').innerHTML = errorMessage;
+                });
+        }
+
+        function startSpeechRecognition(text) {
+            const recognition = new webkitSpeechRecognition();
+            recognition.lang = currentAccent;
+            recognition.continuous = true;
+            recognition.interimResults = true;
+            recognition.maxAlternatives = 3; // More alternatives
+            
+            // Make it more sensitive
+            if (recognition.serviceURI) {
+                recognition.serviceURI = 'wss://www.google.com/speech-api/v2/recognize';
+            }
+
+            let transcript = '';
+            let finalTranscript = '';
+            let hearingSomething = false;
+
+            // Show listening indicator
+            document.getElementById('readingFeedback').innerHTML = `
+                <div class="feedback" style="background: #43e97b; color: white; animation: pulse 1.5s infinite;">
+                    🎤 Listening... Speak now!<br>
+                    Слушам... Говори сега!<br>
+                    <span style="font-size: 0.85em;">Recording for 20 seconds... Speak LOUDER!</span>
+                </div>
+            `;
+
+            recognition.onresult = function(event) {
+                let interimTranscript = '';
+                hearingSomething = true;
+                
+                for (let i = event.resultIndex; i < event.results.length; i++) {
+                    const result = event.results[i];
+                    const confidence = result[0].confidence;
+                    
+                    if (result.isFinal) {
+                        finalTranscript += result[0].transcript + ' ';
+                        console.log('Final:', result[0].transcript, 'Confidence:', confidence);
+                    } else {
+                        interimTranscript += result[0].transcript;
+                        console.log('Interim:', result[0].transcript);
+                    }
+                }
+
+                // Show what's being heard in real-time
+                const displayText = interimTranscript || finalTranscript.trim();
+                if (displayText) {
+                    document.getElementById('readingFeedback').innerHTML = `
+                        <div class="feedback" style="background: #43e97b; color: white;">
+                            🎤 Hearing: "${displayText}"<br>
+                            <span style="font-size: 0.85em;">Keep reading... (${finalTranscript.trim().split(' ').length} words)</span>
+                        </div>
+                    `;
+                }
+            };
+
+            recognition.onspeechstart = function() {
+                console.log('✅ Speech detected!');
+                hearingSomething = true;
+                document.getElementById('readingFeedback').innerHTML = `
+                    <div class="feedback" style="background: #43e97b; color: white;">
+                        ✅ Hearing you!<br>
+                        Те чувам!<br>
+                        <span style="font-size: 0.85em;">Keep talking...</span>
+                    </div>
+                `;
+            };
+
+            recognition.onspeechend = function() {
+                console.log('Speech ended');
+            };
+
+            recognition.onsoundstart = function() {
+                console.log('Sound detected');
+            };
+
+            recognition.onsoundend = function() {
+                console.log('Sound ended');
+            };
+
+            recognition.onaudiostart = function() {
+                console.log('Audio capturing started');
+            };
+
+            recognition.onaudioend = function() {
+                console.log('Audio capturing ended');
+            };
+
+            recognition.onend = function() {
+                console.log('Recognition ended. Final transcript:', finalTranscript);
+                
+                // Check if we actually heard anything
+                if (!hearingSomething) {
+                    document.getElementById('readingFeedback').innerHTML = `
+                        <div class="feedback error">
+                            🔇 No sound detected at all<br>
+                            Изобщо не засякох звук<br>
+                            <span style="font-size: 0.85em;">
+                                1. Check if microphone is muted<br>
+                                2. Speak MUCH louder<br>
+                                3. Check browser console (F12) for errors
+                            </span>
+                        </div>
+                    `;
+                    return;
+                }
+
+                if (!finalTranscript || finalTranscript.trim().length === 0) {
+                    document.getElementById('readingFeedback').innerHTML = `
+                        <div class="feedback error">
+                            ⚠️ Heard sound but no words<br>
+                            Чух звук, но не разбрах думи<br>
+                            <span style="font-size: 0.85em;">
+                                Try speaking MORE CLEARLY and LOUDER in English
+                            </span>
+                        </div>
+                    `;
+                    return;
+                }
+
+                // Compare with original text
+                const similarity = calculateSimilarity(text.toLowerCase(), finalTranscript.toLowerCase());
+                
+                // Only give points if similarity is above 20% (means they actually tried)
+                if (similarity < 0.2) {
+                    document.getElementById('readingFeedback').innerHTML = `
+                        <div class="feedback error">
+                            ⭐ Try again!<br>
+                            Опитай пак!<br>
+                            <span style="font-size: 0.85em;">You said: "${finalTranscript.trim()}"</span><br>
+                            <span style="font-size: 0.85em;">Expected: "${text}"</span>
+                        </div>
+                    `;
+                    return;
+                }
+
+                stats.readings++;
+                const starsEarned = Math.max(1, Math.floor(similarity * 5));
+                stats.stars += starsEarned;
+                saveStats();
+
+                // Show detailed feedback
+                const wordCount = finalTranscript.trim().split(' ').length;
+                const expectedCount = text.split(' ').length;
+                
+                document.getElementById('readingFeedback').innerHTML = `
+                    <div class="feedback success">
+                        ${similarity > 0.7 ? '⭐⭐⭐⭐⭐ Excellent!' : similarity > 0.5 ? '⭐⭐⭐⭐ Very good!' : similarity > 0.3 ? '⭐⭐⭐ Good!' : '⭐⭐ Keep trying!'}<br>
+                        ${similarity > 0.7 ? 'Отлично!' : similarity > 0.5 ? 'Много добре!' : 'Добре!'}<br>
+                        <span style="font-size: 0.9em;">Score: ${Math.round(similarity * 100)}% | +${starsEarned} ⭐</span><br>
+                        <span style="font-size: 0.85em;">Words: ${wordCount}/${expectedCount}</span><br>
+                        <span style="font-size: 0.75em;">You said: "${finalTranscript.trim()}"</span>
+                    </div>
+                `;
+            };
+
+            recognition.onerror = function(event) {
+                console.error('Recognition error:', event.error, event.message);
+                let errorMessage = '';
+                
+                switch(event.error) {
+                    case 'no-speech':
+                        errorMessage = `
+                            <div class="feedback error">
+                                🔇 No speech heard<br>
+                                Не чух говор<br>
+                                <span style="font-size: 0.85em;">
+                                    Please:<br>
+                                    1. Speak MUCH LOUDER<br>
+                                    2. Get closer to microphone<br>
+                                    3. Check microphone is not muted<br>
+                                    4. Check Console (F12) for errors
+                                </span>
+                            </div>
+                        `;
+                        break;
+                    case 'audio-capture':
+                        errorMessage = `
+                            <div class="feedback error">
+                                🎤 Microphone error<br>
+                                Грешка с микрофона<br>
+                                <span style="font-size: 0.85em;">
+                                    1. Check if another app is using microphone<br>
+                                    2. Try refreshing the page<br>
+                                    3. Try different browser
+                                </span>
+                            </div>
+                        `;
+                        break;
+                    case 'not-allowed':
+                        errorMessage = `
+                            <div class="feedback error">
+                                🚫 Permission denied<br>
+                                Достъпът е отказан<br>
+                                <span style="font-size: 0.85em;">Please allow microphone in settings</span>
+                            </div>
+                        `;
+                        break;
+                    case 'network':
+                        errorMessage = `
+                            <div class="feedback error">
+                                🌐 Network error<br>
+                                Мрежова грешка<br>
+                                <span style="font-size: 0.85em;">
+                                    Speech recognition needs internet!<br>
+                                    Check your connection.
+                                </span>
+                            </div>
+                        `;
+                        break;
+                    default:
+                        errorMessage = `
+                            <div class="feedback error">
+                                ❌ Error: ${event.error}<br>
+                                Грешка<br>
+                                <span style="font-size: 0.85em;">
+                                    ${event.message || 'Unknown error'}<br>
+                                    Check Console (F12) for details
+                                </span>
+                            </div>
+                        `;
+                }
+                
+                document.getElementById('readingFeedback').innerHTML = errorMessage;
+            };
+
+            recognition.onnomatch = function() {
+                console.warn('No match found');
+                document.getElementById('readingFeedback').innerHTML = `
+                    <div class="feedback error">
+                        ⚠️ Speech not recognized<br>
+                        Не разпознах говора<br>
+                        <span style="font-size: 0.85em;">Please speak more clearly IN ENGLISH</span>
+                    </div>
+                `;
+            };
+
+            // Start recognition
+            try {
+                recognition.start();
+                console.log('🎤 Recognition started. Language:', currentAccent);
+            } catch (error) {
+                console.error('Could not start recognition:', error);
+                document.getElementById('readingFeedback').innerHTML = `
+                    <div class="feedback error">
+                        ❌ Could not start<br>
+                        Не може да стартира<br>
+                        <span style="font-size: 0.85em;">${error.message}</span>
+                    </div>
+                `;
+                return;
+            }
+
+            // Stop after 20 seconds (increased from 15)
+            setTimeout(() => {
+                try {
+                    recognition.stop();
+                    console.log('⏱️ Timeout - stopping recognition');
+                } catch (error) {
+                    console.log('Already stopped');
+                }
+            }, 20000);
+        }
+
+        function calculateSimilarity(text1, text2) {
+            const words1 = text1.split(' ');
+            const words2 = text2.split(' ');
+            let matches = 0;
+
+            words1.forEach(word => {
+                if (words2.includes(word)) matches++;
+            });
+
+            return matches / words1.length;
+        }
+
+        // Settings
+        function setAccent(accent) {
+            currentAccent = accent;
+            localStorage.setItem('easyspeakAccent', accent);
+            
+            document.getElementById('usAccent').classList.remove('active');
+            document.getElementById('ukAccent').classList.remove('active');
+            
+            if (accent === 'en-US') {
+                document.getElementById('usAccent').classList.add('active');
+            } else {
+                document.getElementById('ukAccent').classList.add('active');
+            }
+        }
+
+        // Initialize
+        window.onload = function() {
+            loadStats();
+            
+            const savedAccent = localStorage.getItem('easyspeakAccent');
+            if (savedAccent) {
+                setAccent(savedAccent);
+            }
+
+            // Check if running on HTTPS or localhost
+            if (window.location.protocol === 'file:') {
+                const warning = document.createElement('div');
+                warning.className = 'install-prompt';
+                warning.style.background = 'linear-gradient(135deg, #f5576c 0%, #f093fb 100%)';
+                warning.innerHTML = `
+                    ⚠️ Warning: Speech recognition may not work!<br>
+                    Please host this file on a web server (HTTPS) or localhost.<br>
+                    <span style="font-size: 0.85em;">Гласовото разпознаване може да не работи от файл!</span>
+                `;
+                document.querySelector('.container').insertBefore(warning, document.querySelector('.header').nextSibling);
+            }
+
+            // Check if PWA
+            if (window.matchMedia('(display-mode: standalone)').matches) {
+                console.log('Running as PWA');
+            }
+
+            // Test microphone availability on load (silent check)
+            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                navigator.mediaDevices.enumerateDevices()
+                    .then(devices => {
+                        const hasMicrophone = devices.some(device => device.kind === 'audioinput');
+                        if (!hasMicrophone) {
+                            console.warn('No microphone detected');
+                        }
+                    })
+                    .catch(err => {
+                        console.warn('Could not enumerate devices:', err);
+                    });
+            }
+        };
+
+        // PWA Install prompt
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            
+            const installPrompt = document.createElement('div');
+            installPrompt.className = 'install-prompt';
+            installPrompt.innerHTML = '📲 Install EasySpeak as an app! / Инсталирай като приложение!';
+            installPrompt.onclick = async () => {
+                if (deferredPrompt) {
+                    deferredPrompt.prompt();
+                    const { outcome } = await deferredPrompt.userChoice;
+                    deferredPrompt = null;
+                    installPrompt.remove();
+                }
+            };
+            document.querySelector('.container').insertBefore(installPrompt, document.querySelector('.header').nextSibling);
+        });
+    </script>
+</body>
+</html>
